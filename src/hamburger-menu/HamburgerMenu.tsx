@@ -8,7 +8,13 @@ interface HamburgerMenuProps {
 	setOpen: (open: boolean) => void;
 }
 
-export function HamburgerMenu(props: HamburgerMenuProps) {
+/**
+ * Hamburger menu component
+ * 
+ * @param props {@link HamburgerMenuProps} props
+ * @returns A {@link JSX.Element} representing a hamburger menu and its menu items
+ */
+export const HamburgerMenu: React.FC<HamburgerMenuProps> = (props: HamburgerMenuProps) => {
 	const hamburgerRef = useRef<HTMLDivElement>(null);
 
 	useHandleClickOutside({ ref: hamburgerRef, setPopupState: props.setOpen });

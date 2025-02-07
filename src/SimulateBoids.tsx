@@ -7,9 +7,8 @@ import { IoIosInformationCircle, IoMdSettings } from "react-icons/io";
 import { MenuItem } from "./hamburger-menu/MenuItem";
 import { ConfigPopupForm } from "./popups/ConfigForm";
 import { InfoPopup } from "./popups/InfoPopup";
-
-import "./popups/forms.css";
 import { HiMiniPlay, HiMiniPause } from "react-icons/hi2";
+import "./popups/forms.css";
 
 interface SimulationConfigs {
 	boidConfig: BoidConfig;
@@ -24,7 +23,7 @@ interface SimulationConfigs {
 export default function SimulateBoids(): JSX.Element {
 	const [showInfoPopup, setShowInfoPopup] = useState<boolean>(false);
 	const [showConfigPopup, setShowConfigPopup] = useState<boolean>(false);
-	const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+	const [showHamburgerMenu, setShowHamburgerMenu] = useState<boolean>(false);
 
 	const [simulationConfig, setSimulationConfig] = useState<SimulationConfigs>({
 		boidConfig: {
@@ -53,11 +52,11 @@ export default function SimulateBoids(): JSX.Element {
 	const pauseRef = useRef<boolean>(false);
 
 	useEffect(() => {
-		const timeoutId = setTimeout(() => {
+		const timeout = setTimeout(() => {
 			setShowInfoPopup(true);
 		}, 500);
 
-		return () => clearTimeout(timeoutId);
+		return () => clearTimeout(timeout);
 	}, []);
 
 	useEffect(() => {
@@ -113,8 +112,7 @@ export default function SimulateBoids(): JSX.Element {
 	/**
 	 * Handles the submission of the config popup
 	 *
-	 * @param e Form event
-	 * @returns void
+	 * @param e {@link React.FormEvent} event
 	 */
 	const handleConfigSubmit = (e: React.FormEvent) => {
 		e.preventDefault();

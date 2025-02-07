@@ -1,4 +1,3 @@
-import React from "react";
 import { IconContext, IconType } from "react-icons";
 
 interface MenuItemProps {
@@ -6,7 +5,13 @@ interface MenuItemProps {
 	onClick: () => void;
 }
 
-export function MenuItem(props: MenuItemProps) {
+/**
+ * Menu item component
+ * 
+ * @param props {@link MenuItemProps} props
+ * @returns A {@link JSX.Element} representing a menu item
+ */
+export const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
 	return (
 		<div className="menu-item" onClick={props.onClick}>
 			{

@@ -31,7 +31,7 @@ export default class Boid {
 	 * @param p5 p5 instance
 	 * @param x x position
 	 * @param y y position
-	 * @param config Boid configuration
+	 * @param config A {@link BoidConfig} configuration
 	 */
 	constructor(p5: p5, x: number, y: number, config: BoidConfig) {
 		this.p5 = p5;
