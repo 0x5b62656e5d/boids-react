@@ -2,6 +2,7 @@
   "name": "boids-react",
   "private": false,
   "version": "0.1.0",
+  "homepage": "https://0x5b62656e5d.github.io/boids-react",
   "type": "module",
   "scripts": {
     "dev": "vite",
