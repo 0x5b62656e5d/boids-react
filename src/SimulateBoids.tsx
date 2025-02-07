@@ -1,7 +1,7 @@
 import p5 from "p5";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import Boid, { BoidConfig } from "./Boid";
-import { JSX, useCallback, useEffect, useState } from "react";
+import { JSX, useCallback, useEffect, useRef, useState } from "react";
 import { HamburgerMenu } from "./hamburger-menu/HamburgerMenu";
 import { IoIosInformationCircle, IoMdSettings } from "react-icons/io";
 import { MenuItem } from "./hamburger-menu/MenuItem";
@@ -9,6 +9,7 @@ import { ConfigPopupForm } from "./popups/ConfigForm";
 import { InfoPopup } from "./popups/InfoPopup";
 
 import "./popups/forms.css";
+import { HiMiniPlay, HiMiniPause } from "react-icons/hi2";
 
 interface SimulationConfigs {
 	boidConfig: BoidConfig;
@@ -48,6 +49,9 @@ export default function SimulateBoids(): JSX.Element {
 		boidAmount: simulationConfig.boidAmount.toString(),
 	});
 
+	const [pause, setPause] = useState<boolean>(false);
+	const pauseRef = useRef<boolean>(false);
+
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
 			setShowInfoPopup(true);
@@ -55,6 +59,10 @@ export default function SimulateBoids(): JSX.Element {
 
 		return () => clearTimeout(timeoutId);
 	}, []);
+
+	useEffect(() => {
+		pauseRef.current = pause;
+	}, [pause]);
 
 	/**
 	 * Main sketch function
@@ -90,9 +98,11 @@ export default function SimulateBoids(): JSX.Element {
 				p5.background("#222436");
 
 				for (const boid of boids) {
-					boid.wrapEdges();
-					boid.flock(boids);
-					boid.update();
+					if (!pauseRef.current) {
+						boid.wrapEdges();
+						boid.flock(boids);
+						boid.update();
+					}
 					boid.show();
 				}
 			};
@@ -153,6 +163,10 @@ export default function SimulateBoids(): JSX.Element {
 						}
 					}}
 					icon={IoMdSettings}
+				/>
+				<MenuItem
+					onClick={() => setPause(prev => !prev)}
+					icon={pause ? HiMiniPlay : HiMiniPause}
 				/>
 			</HamburgerMenu>
 
