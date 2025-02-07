@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { IconContext } from "react-icons";
 import { RxCross2 } from "react-icons/rx";
-import { useHandleClickOutside } from "./Utils";
+import { useHandleClickOutside } from "../utils/useHandleClickOutside";
 
 interface InfoPopupProps {
 	showInfoPopup: boolean;
