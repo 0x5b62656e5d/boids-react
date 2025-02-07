@@ -53,27 +53,12 @@
 	gap: 8px;
 }
 
-.menu-icon {
-	font-size: 20px;
-	color: #fff;
-	background-color: #444;
-	padding: 8px;
-	border-radius: 4px;
-	text-align: center;
-	width: 32px;
-	cursor: pointer;
-}
-
-.menu-icon:hover {
-	background-color: #666;
-}
-
-.react-icons {
-	vertical-align: middle;
-}
-
 .menu-item {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.menu-item:hover {
+	cursor: pointer;
 }
