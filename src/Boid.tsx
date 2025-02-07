@@ -1,5 +1,14 @@
 import type p5 from "p5";
 
+export interface BoidConfig {
+	maxVelocity: number;
+	maxForce: number;
+	alignmentMultiplier: number;
+	cohesionMultiplier: number;
+	separationMultiplier: number;
+	perceptionRadius: number;
+}
+
 export default class Boid {
 	p5: p5;
 
@@ -22,16 +31,23 @@ export default class Boid {
 	 * @param p5 p5 instance
 	 * @param x x position
 	 * @param y y position
+	 * @param config A {@link BoidConfig} configuration
 	 */
-	constructor(p5: p5, x: number, y: number) {
+	constructor(p5: p5, x: number, y: number, config: BoidConfig) {
 		this.p5 = p5;
-
 		this.position = p5.createVector(x, y);
 		this.velocity = p5.createVector(
 			p5.random(-this.maxVelocity, this.maxVelocity),
 			p5.random(-this.maxVelocity, this.maxVelocity)
 		);
 		this.acceleration = p5.createVector(0, 0);
+
+		this.maxVelocity = config.maxVelocity;
+		this.maxForce = config.maxForce;
+		this.alignmentMultiplier = config.alignmentMultiplier;
+		this.cohesionMultiplier = config.cohesionMultiplier;
+		this.separationMultiplier = config.separationMultiplier;
+		this.perceptionRadius = config.perceptionRadius;
 	}
 
 	/**
