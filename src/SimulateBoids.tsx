@@ -148,7 +148,7 @@ export default function SimulateBoids(): JSX.Element {
 			<HamburgerMenu open={showHamburgerMenu} setOpen={setShowHamburgerMenu}>
 				<MenuItem
 					onClick={() => {
-						if (!showConfigPopup) {
+						if (showHamburgerMenu && !showConfigPopup) {
 							setShowInfoPopup(true);
 							setShowHamburgerMenu(false);
 						}
@@ -157,7 +157,7 @@ export default function SimulateBoids(): JSX.Element {
 				/>
 				<MenuItem
 					onClick={() => {
-						if (!showInfoPopup) {
+						if (showHamburgerMenu && !showInfoPopup) {
 							setShowConfigPopup(true);
 							setShowHamburgerMenu(false);
 						}
@@ -165,7 +165,11 @@ export default function SimulateBoids(): JSX.Element {
 					icon={IoMdSettings}
 				/>
 				<MenuItem
-					onClick={() => setPause(prev => !prev)}
+					onClick={() => {
+						if (showHamburgerMenu) {
+							setPause(prev => !prev);
+						}
+					}}
 					icon={pause ? HiMiniPlay : HiMiniPause}
 				/>
 			</HamburgerMenu>
