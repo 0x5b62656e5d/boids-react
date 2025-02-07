@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./HamburgerMenu.css";
+import { useHandleClickOutside } from "../utils/useHandleClickOutside";
 
 interface HamburgerMenuProps {
 	children: React.ReactNode[];
@@ -8,8 +9,12 @@ interface HamburgerMenuProps {
 }
 
 export function HamburgerMenu(props: HamburgerMenuProps) {
+	const hamburgerRef = useRef<HTMLDivElement>(null);
+
+	useHandleClickOutside({ ref: hamburgerRef, setPopupState: props.setOpen });
+
 	return (
-		<div className="hamburger-menu">
+		<div className="hamburger-menu" ref={hamburgerRef}>
 			<div
 				className={`hamburger-icon ${props.open ? "open" : ""}`}
 				onClick={() => props.setOpen(!props.open)}
