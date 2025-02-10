@@ -7,6 +7,8 @@ export interface BoidConfig {
 	cohesionMultiplier: number;
 	separationMultiplier: number;
 	perceptionRadius: number;
+	perceptionFov: number;
+	drawFovLines: boolean;
 }
 
 export default class Boid {
@@ -20,6 +22,8 @@ export default class Boid {
 	separationMultiplier: number = 1.5;
 
 	perceptionRadius: number = 50;
+	perceptionFov: number = 300;
+	drawFovLines: boolean = false;
 
 	position: p5.Vector;
 	velocity: p5.Vector;
@@ -48,6 +52,8 @@ export default class Boid {
 		this.cohesionMultiplier = config.cohesionMultiplier;
 		this.separationMultiplier = config.separationMultiplier;
 		this.perceptionRadius = config.perceptionRadius;
+		this.perceptionFov = config.perceptionFov / 2;
+		this.drawFovLines = config.drawFovLines;
 	}
 
 	/**
@@ -89,7 +95,7 @@ export default class Boid {
 				other.position.y
 			);
 
-			if (other !== this && dist < this.perceptionRadius) {
+			if (other !== this && dist < this.perceptionRadius && this.inFov(other)) {
 				steerVector.add(other.velocity);
 				total++;
 			}
@@ -122,7 +128,7 @@ export default class Boid {
 				other.position.y
 			);
 
-			if (other !== this && d < this.perceptionRadius) {
+			if (other !== this && d < this.perceptionRadius && this.inFov(other)) {
 				steerVector.add(other.position);
 				total++;
 			}
@@ -157,7 +163,7 @@ export default class Boid {
 				other.position.y
 			);
 
-			if (other !== this && d < this.perceptionRadius / 2) {
+			if (other !== this && d < this.perceptionRadius / 2 && this.inFov(other)) {
 				const diff = this.p5.createVector(
 					this.position.x - other.position.x,
 					this.position.y - other.position.y
@@ -177,6 +183,25 @@ export default class Boid {
 		}
 
 		return steerVector;
+	}
+
+	/**
+	 * Checks if another boid is within the boid's field of view
+	 *
+	 * @param other Another {@link Boid} to check if it is within the boid's field of view
+	 * @returns True if the other boid is within the boid's field of view, false otherwise
+	 */
+	inFov(other: Boid): boolean {
+		return (
+			Math.abs(
+				this.velocity.angleBetween(
+					this.p5.createVector(
+						other.position.x - this.position.x,
+						other.position.y - this.position.y
+					)
+				)
+			) < this.p5.radians(this.perceptionFov)
+		);
 	}
 
 	/**
@@ -209,6 +234,20 @@ export default class Boid {
 	}
 
 	/**
+	 * Draws a line with a specified angle from the boid's position
+	 *
+	 * @param angle Angle of the line in radians
+	 * @param length Length of the line
+	 */
+	drawAngleLine(angle: number, length: number): void {
+		const direction = this.p5.createVector(this.p5.cos(angle), this.p5.sin(angle));
+
+		direction.mult(length);
+
+		this.p5.line(0, 0, direction.x, direction.y);
+	}
+
+	/**
 	 * Draws the boid as a triangle pointing in the direction of its velocity vector
 	 */
 	show(): void {
@@ -222,6 +261,30 @@ export default class Boid {
 		this.p5.vertex(0, -6);
 		this.p5.vertex(-4, 6);
 		this.p5.vertex(4, 6);
+
+		if (this.drawFovLines) {
+			if (this.perceptionFov !== 180) {
+				this.drawAngleLine(
+					-this.p5.radians(this.perceptionFov) - this.p5.radians(90),
+					this.perceptionRadius
+				);
+				this.drawAngleLine(
+					this.p5.radians(this.perceptionFov) - this.p5.radians(90),
+					this.perceptionRadius
+				);
+			}
+
+			this.p5.noFill();
+			this.p5.arc(
+				0,
+				0,
+				this.perceptionRadius * 2,
+				this.perceptionRadius * 2,
+				-this.p5.radians(this.perceptionFov) - this.p5.radians(90),
+				this.p5.radians(this.perceptionFov) - this.p5.radians(90)
+			);
+		}
+
 		this.p5.endShape(this.p5.CLOSE);
 		this.p5.pop();
 	}
