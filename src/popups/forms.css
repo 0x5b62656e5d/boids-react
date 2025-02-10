@@ -62,6 +62,36 @@ form {
 	cursor: pointer;
 }
 
+#draw-fov {
+	position: relative;
+	width: 50px;
+	height: 24px;
+	display: inline-block;
+	border-radius: 100px;
+	box-shadow: 0px 2px 6px -2px rgba(0, 0, 0, 0.4);
+	margin: 10px;
+}
+
+#draw-fov .fill {
+	position: absolute;
+	left: 2px;
+	top: 2px;
+	bottom: 0;
+	border-radius: 50%;
+	background: #222436;
+	width: 20px;
+	height: 20px;
+	transition: 0.4s left;
+}
+
+#draw-fov input {
+	width: 0;
+	visibility: hidden;
+}
+#draw-fov input:checked + span.fill {
+	left: calc(100% - 22px);
+}
+
 .exit-form {
 	position: absolute;
 	top: 10px;

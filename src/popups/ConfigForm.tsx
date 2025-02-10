@@ -13,6 +13,8 @@ interface ConfigPopupFormProps {
 			cohesionMultiplier: string;
 			separationMultiplier: string;
 			perceptionRadius: string;
+			perceptionFov: string;
+			drawFovLines: string;
 		};
 		boidAmount: string;
 	};
@@ -24,6 +26,8 @@ interface ConfigPopupFormProps {
 			cohesionMultiplier: string;
 			separationMultiplier: string;
 			perceptionRadius: string;
+			perceptionFov: string;
+			drawFovLines: string;
 		};
 		boidAmount: string;
 	}) => void;
@@ -162,6 +166,50 @@ export const ConfigPopupForm: React.FC<ConfigPopupFormProps> = ({
 						placeholder="50"
 						className="popup-input"
 					/>
+					<label>Perception FOV</label>
+					<input
+						type="number"
+						step="any"
+						value={simulationConfigInput.boidConfig.perceptionFov}
+						onChange={e =>
+							setSimulationConfigInput({
+								...simulationConfigInput,
+								boidConfig: {
+									...simulationConfigInput.boidConfig,
+									perceptionFov: e.target.value,
+								},
+							})
+						}
+						min={10}
+						max={360}
+						placeholder="120"
+						className="popup-input"
+					/>
+					<label>Draw FOV lines</label>
+					<label
+						id="draw-fov"
+						style={{
+							backgroundColor: JSON.parse(
+								simulationConfigInput.boidConfig.drawFovLines
+							)
+								? "#4CAF50"
+								: "#f44336",
+						}}
+					>
+						<input
+							type="checkbox"
+							onChange={e =>
+								setSimulationConfigInput({
+									...simulationConfigInput,
+									boidConfig: {
+										...simulationConfigInput.boidConfig,
+										drawFovLines: e.target.checked.toString(),
+									},
+								})
+							}
+						/>
+						<span className="fill"></span>
+					</label>
 					<label>Boid amount</label>
 					<input
 						type="number"

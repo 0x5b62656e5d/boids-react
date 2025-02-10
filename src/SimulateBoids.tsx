@@ -33,6 +33,8 @@ export default function SimulateBoids(): JSX.Element {
 			cohesionMultiplier: 1,
 			separationMultiplier: 1.5,
 			perceptionRadius: 50,
+			perceptionFov: 300,
+			drawFovLines: false,
 		},
 		boidAmount: 100,
 	});
@@ -44,6 +46,8 @@ export default function SimulateBoids(): JSX.Element {
 			cohesionMultiplier: simulationConfig.boidConfig.cohesionMultiplier.toString(),
 			separationMultiplier: simulationConfig.boidConfig.separationMultiplier.toString(),
 			perceptionRadius: simulationConfig.boidConfig.perceptionRadius.toString(),
+			perceptionFov: simulationConfig.boidConfig.perceptionFov.toString(),
+			drawFovLines: simulationConfig.boidConfig.drawFovLines.toString(),
 		},
 		boidAmount: simulationConfig.boidAmount.toString(),
 	});
@@ -122,6 +126,8 @@ export default function SimulateBoids(): JSX.Element {
 		const newCohesion = parseFloat(simulationConfigInput.boidConfig.cohesionMultiplier);
 		const newSeparation = parseFloat(simulationConfigInput.boidConfig.separationMultiplier);
 		const newPerceptionRadius = parseFloat(simulationConfigInput.boidConfig.perceptionRadius);
+		const newPerceptionFov = parseFloat(simulationConfigInput.boidConfig.perceptionFov);
+		const newDrawFovLines = JSON.parse(simulationConfigInput.boidConfig.drawFovLines);
 		const newAmount = parseFloat(simulationConfigInput.boidAmount);
 
 		setSimulationConfig({
@@ -132,6 +138,8 @@ export default function SimulateBoids(): JSX.Element {
 				cohesionMultiplier: newCohesion,
 				separationMultiplier: newSeparation,
 				perceptionRadius: newPerceptionRadius,
+				perceptionFov: newPerceptionFov,
+				drawFovLines: newDrawFovLines,
 			},
 			boidAmount: newAmount,
 		});
