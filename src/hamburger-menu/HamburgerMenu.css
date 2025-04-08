@@ -3,6 +3,8 @@
 	top: 20px;
 	left: 20px;
 	z-index: 999;
+
+	user-select: none;
 }
 
 .hamburger-icon {
@@ -12,6 +14,8 @@
 	flex-direction: column;
 	justify-content: space-between;
 	cursor: pointer;
+
+	user-select: none;
 }
 
 .hamburger-icon span {
@@ -43,6 +47,8 @@
 	opacity: 0;
 	transform: translateY(-20px);
 	transition: all 0.3s ease-in-out;
+
+	user-select: none;
 }
 
 .menu-icons.open {
@@ -57,6 +63,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	user-select: none;
 }
 
 .menu-item:hover {

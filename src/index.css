@@ -23,4 +23,5 @@ body {
 
 .react-p5-wrapper {
 	overflow: none;
+	user-select: none;
 }
